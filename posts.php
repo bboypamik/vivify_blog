@@ -2,7 +2,7 @@
    <?php
        $servername = "127.0.0.1";
        $username = "root";
-       $password = "vivify";
+       $password = "root";
        $dbname ="vivify_posts";
                
     try {
@@ -37,15 +37,44 @@
 
                 // koristite var_dump kada god treba da proverite sadrzaj neke promenjive
 
-                    echo '<pre>';
+//                    echo '<pre>';
+//
+//                    //var_dump($posts);
+//
+//                    echo '</pre>';
 
-                    var_dump($posts);
 
-                    echo '</pre>';
+
+                    foreach ($posts as $post){
+//                        echo '<pre>';
+//                        //print_r($post);
+//                        echo '</pre>';
+
+
+                       // echo $post['title'];
+                    }
 
             ?>
 
-              
+   <div class="col-sm-8 blog-main">
 
-                <?php include "sidebar.php"; ?>
-       <?php include "footer.php";?> 
+
+
+
+
+<?php foreach ($posts as $post): ?>
+            <div class="blog-post">
+           <a href =""><h2 class="blog-post-title"><?php echo $post['title']; ?></h2></a>
+           <p class="blog-post-meta"><?php echo $post['created_at']; ?> by <a href="#"><?php echo $post['author']; ?></a></p>
+
+           <p><?php echo $post['body']; ?></p>
+       </div><!-- /.blog-post -->
+<?php endforeach; ?>
+
+
+       <nav class="blog-pagination">
+           <a class="btn btn-outline-primary" href="#">Older</a>
+           <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
+       </nav>
+
+   </div><!-- /.blog-main -->
