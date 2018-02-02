@@ -1,7 +1,7 @@
  <?php
        $servername = "127.0.0.1";
        $username = "root";
-       $password = "";
+       $password = "vivify";
        $dbname ="vivify_posts";
 
     try {
@@ -43,20 +43,20 @@
 
  // izvrsavamo upit
 
- $statement->execute();
+  $statement->execute();
 
- // zelimo da se rezultat vrati kao asocijativni niz.
+ // // zelimo da se rezultat vrati kao asocijativni niz.
 
- // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
+ // // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
 
- $statement->setFetchMode(PDO::FETCH_ASSOC);
+  $statement->setFetchMode(PDO::FETCH_ASSOC);
 
- // punimo promenjivu sa rezultatom upita
+ // // punimo promenjivu sa rezultatom upita
 
- $comments = $statement->fetchAll();
-// echo "<pre>";
+  $comments = $statement->fetchAll();
+ //echo "<pre>";
 // print_r($comments);
-// echo "</pre>";
+ //echo "</pre>";
             ?>
 
 <!doctype html>
@@ -93,6 +93,12 @@
             <p class="blog-post-meta"><?php echo $post['created_at']; ?> by <a href="#"><?php echo $post['author']; ?></a></p>
 
             <p><?php echo $post['body']; ?></p>
+             <form>
+  Name<br>
+  <input type="text" name="firstname"><br>
+  <textarea rows="3" cols="50"></textarea><br>
+  <input type="submit">
+</form> <br>
             <button id="showhide" class="btn btn-default " >Hide comments</button>
             <div class="comments">
             <ul>
@@ -113,23 +119,26 @@
 </main><!-- /.container -->
 <?php include "footer.php";?>
 
-</body>
-</html>
  <script>
  var status = "open";
 
  document.querySelector('#showhide').addEventListener('click', function () {
  console.log(status);
  if(status == "open"){
- document.querySelector('.comments').style.display = "none" ;
- document.querySelector('#showhide').innerHTML = "Show comments";
- status = "closed";
+   document.querySelector('.comments').style.display = "none" ;
+   document.querySelector('#showhide').innerHTML = "Show comments";
+   status = "closed";
  }
  else{
- document.querySelector('.comments').style.display = "block" ;
- document.querySelector('#showhide').innerHTML = "Hide comments";
- status = "open";
+   document.querySelector('.comments').style.display = "block" ;
+   document.querySelector('#showhide').innerHTML = "Hide comments";
+   status = "open";
  }
  });
 
  </script>
+
+</body>
+</html>
+ */
+ 
