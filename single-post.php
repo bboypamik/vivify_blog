@@ -10,6 +10,7 @@
        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    }
    catch(PDOException $e)
+
    {
        echo $e->getMessage();
    }
@@ -92,15 +93,16 @@
             <p class="blog-post-meta"><?php echo $post['created_at']; ?> by <a href="#"><?php echo $post['author']; ?></a></p>
 
             <p><?php echo $post['body']; ?></p>
-
+            <button id="showhide" class="btn btn-default " >Hide comments</button>
+            <div class="comments">
             <ul>
                 <?php foreach ($comments as $comment) { ?>
 
-                    <li><?php echo $comment['Text']?> by <?php echo $comment['Author']?><hr></li>
+                    <li><?php echo $comment['Text']?> by <?php echo $comment['Author']?></li>
 
                 <?php } ?>
             </ul>
-
+            </div>
         </div><!-- /.blog-post -->
 
 
@@ -113,3 +115,21 @@
 
 </body>
 </html>
+ <script>
+ var status = "open";
+
+ document.querySelector('#showhide').addEventListener('click', function () {
+ console.log(status);
+ if(status == "open"){
+ document.querySelector('.comments').style.display = "none" ;
+ document.querySelector('#showhide').innerHTML = "Show comments";
+ status = "closed";
+ }
+ else{
+ document.querySelector('.comments').style.display = "block" ;
+ document.querySelector('#showhide').innerHTML = "Hide comments";
+ status = "open";
+ }
+ });
+
+ </script>
