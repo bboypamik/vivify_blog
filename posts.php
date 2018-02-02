@@ -2,7 +2,7 @@
    <?php
        $servername = "127.0.0.1";
        $username = "root";
-       $password = "root";
+       $password = "";
        $dbname ="vivify_posts";
                
     try {
@@ -56,7 +56,7 @@
 
 <?php foreach ($posts as $post) { ?>
             <div class="blog-post">
-           <a href ="/single-post.php?post_id=<?php echo $post['id']; ?>"><h2 class="blog-post-title"><?php echo $post['title']; ?></h2></a>
+           <a href ="single-post.php?post_id=<?php echo $post['id']; ?>"><h2 class="blog-post-title"><?php echo $post['title']; ?></h2></a>
            <p class="blog-post-meta"><?php echo $post['created_at']; ?> by <a href="#"><?php echo $post['author']; ?></a></p>
 
            <p><?php echo $post['body']; ?></p>

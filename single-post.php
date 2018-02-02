@@ -1,7 +1,7 @@
  <?php
        $servername = "127.0.0.1";
        $username = "root";
-       $password = "root";
+       $password = "";
        $dbname ="vivify_posts";
 
     try {
@@ -96,7 +96,7 @@
             <ul>
                 <?php foreach ($comments as $comment) { ?>
 
-                    <li><?php echo $comment['Text']?> by <?php echo $comment['Author']?></li>
+                    <li><?php echo $comment['Text']?> by <?php echo $comment['Author']?><hr></li>
 
                 <?php } ?>
             </ul>
