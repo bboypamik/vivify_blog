@@ -1,29 +1,115 @@
+ <?php
+       $servername = "127.0.0.1";
+       $username = "root";
+       $password = "root";
+       $dbname ="vivify_posts";
+
+    try {
+       $connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+       // set the PDO error mode to exception
+       $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+   }
+   catch(PDOException $e)
+   {
+       echo $e->getMessage();
+   }
+                $postId = $_GET['post_id'];
+                // pripremamo upit
+
+
+                $sql = "SELECT id, title, body, author, created_at FROM posts WHERE id = {$postId}";
+
+                $statement = $connection->prepare($sql);
+
+                // izvrsavamo upit
+
+                $statement->execute();
+
+                // zelimo da se rezultat vrati kao asocijativni niz.
+
+                // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
+
+                $statement->setFetchMode(PDO::FETCH_ASSOC);
+
+                // punimo promenjivu sa rezultatom upita
+
+                $post = $statement->fetch();
+
+
+ $sql = "SELECT id, Author, Text , post_id FROM comments WHERE post_id = {$postId}";
+
+ $statement = $connection->prepare($sql);
+
+ // izvrsavamo upit
+
+ $statement->execute();
+
+ // zelimo da se rezultat vrati kao asocijativni niz.
+
+ // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
+
+ $statement->setFetchMode(PDO::FETCH_ASSOC);
+
+ // punimo promenjivu sa rezultatom upita
+
+ $comments = $statement->fetchAll();
+// echo "<pre>";
+// print_r($comments);
+// echo "</pre>";
+            ?>
+
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Vivify Blog</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="styles/blog.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+
 <?php include "header.php";?>
-<div class="blog-post">
-                <h2 class="blog-post-title">Another blog post</h2>
-                <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
 
-                <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                <blockquote>
-                    <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                </blockquote>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-            </div><!-- /.blog-post -->
+<main role="main" class="container">
 
-            <div class="blog-post">
-                <h2 class="blog-post-title">New feature</h2>
-                <p class="blog-post-meta">December 14, 2013 by <a href="#">Chris</a></p>
+    <div class="row">
 
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <ul>
-                    <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                    <li>Donec id elit non mi porta gravida at eget metus.</li>
-                    <li>Nulla vitae elit libero, a pharetra augue.</li>
-                </ul>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-            </div><!-- /.blog-post -->
 
-            <?php include "sidebar.php"; ?>
-       <?php include "footer.php";?> 
+        <div class="blog-post">
+            <a href ="/single-post.php?post_id=<?php echo $post['id']; ?>"><h2 class="blog-post-title"><?php echo $post['title']; ?></h2></a>
+            <p class="blog-post-meta"><?php echo $post['created_at']; ?> by <a href="#"><?php echo $post['author']; ?></a></p>
+
+            <p><?php echo $post['body']; ?></p>
+
+            <ul>
+                <?php foreach ($comments as $comment) { ?>
+
+                    <li><?php echo $comment['Text']?> by <?php echo $comment['Author']?></li>
+
+                <?php } ?>
+            </ul>
+
+        </div><!-- /.blog-post -->
+
+
+        <?php include "sidebar.php"; ?>
+
+    </div><!-- /.row -->
+
+</main><!-- /.container -->
+<?php include "footer.php";?>
+
+</body>
+</html>
